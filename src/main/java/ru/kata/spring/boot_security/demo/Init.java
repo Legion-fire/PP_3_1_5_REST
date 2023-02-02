@@ -30,14 +30,14 @@ public class Init {
     @PostConstruct
         public void createTable () {
         if (userService.findAll().isEmpty()){
-        Role admin = new Role( "ROLE_ADMIN", 1L);
-        Role user = new Role("ROLE_USER", 2L);
-        roleService.add(admin);
-        roleService.add(user);
-        Set<Role> setRole = new HashSet<>();
-        Set<Role> userSet = new HashSet<>();
-        setRole.add(admin);
-        userSet.add(user);
+            Role admin = new Role("ROLE_ADMIN", 1L);
+            Role user = new Role("ROLE_USER", 2L);
+            roleService.add(admin);
+            roleService.add(user);
+            Set<Role> setRole = new HashSet<>();
+            Set<Role> userSet = new HashSet<>();
+            setRole.add(admin);
+            userSet.add(user);
         User newAdmin = new User("Михаил", "Янаров", 28,
                 "Legion-fire@yandex.ru", "admin", setRole);
         User newUser = new User("Григорий", "Аквинский", 27,

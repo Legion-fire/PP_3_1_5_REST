@@ -13,6 +13,7 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
 
+
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
@@ -38,8 +39,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User find(String email) {
-        return userRepository.find(email);
+    public User findByUsername(String name) {
+        return userRepository.find(name);
     }
 
     @Override

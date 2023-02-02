@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
 
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -22,9 +21,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User find(String email) {
+    public User find(String name) {
         return entityManager.createQuery(
-                        "SELECT u FROM User u WHERE u.email = :email", User.class).setParameter("email", email).getSingleResult();
+                        "SELECT u FROM User u WHERE u.name = :name", User.class).setParameter("name", name).getSingleResult();
     }
 
     @Override

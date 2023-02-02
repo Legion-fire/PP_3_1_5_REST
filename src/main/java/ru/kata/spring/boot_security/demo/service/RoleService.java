@@ -11,4 +11,5 @@ public interface RoleService  {
      boolean add(Role role);
      Set<Role> findByIdRoles(List<Long> roles);
 
+
 }
