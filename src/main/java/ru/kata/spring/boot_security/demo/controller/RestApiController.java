@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.exception.UserErrorResponse;
@@ -58,7 +57,7 @@ public class RestApiController {
         UserErrorResponse response = new UserErrorResponse(
                 e.getMessage()
         );
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok(response);
     }
 
     @ExceptionHandler
@@ -66,6 +65,6 @@ public class RestApiController {
         UserErrorResponse response = new UserErrorResponse(
                 e.getMessage()
         );
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.ok(response);
     }
 }
