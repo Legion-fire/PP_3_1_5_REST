@@ -38,19 +38,11 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin(form -> {
-                    try {
                         form
                                 .usernameParameter("name")
                                 .passwordParameter("password")
                                 .loginPage("/login")
-                                .successHandler(new SuccessUserHandler())
-                                .permitAll()
-                                .and()
-                                .logout()
-                                .permitAll();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
+                                .successHandler(new SuccessUserHandler());
                 });
         return http.build();
     }
