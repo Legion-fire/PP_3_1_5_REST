@@ -53,14 +53,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        getPasswordEncoder(user);
         userRepository.save(user);
     }
 
     @Override
     public void update(User user, Long id) {
         user.setId(id);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        getPasswordEncoder(user);
         userRepository.update(user);
     }
 
@@ -69,7 +69,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.find(username);
     }
 
-    public PasswordEncoder getPasswordEncoder() {
-        return passwordEncoder;
+    public User getPasswordEncoder(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return user;
     }
 }

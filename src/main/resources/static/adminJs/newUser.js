@@ -5,7 +5,7 @@ async function newUser() {
     form_new.addEventListener('submit', addNewUser);
     async function addNewUser(event) {
         event.preventDefault();
-        const urlNew = 'api/admin/users/newAddUser';
+        const urlNew = 'api/admin/users';
 
         let checkedRoles = () => {
             let array = []

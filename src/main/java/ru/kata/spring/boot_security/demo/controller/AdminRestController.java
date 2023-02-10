@@ -32,7 +32,7 @@ public class AdminRestController {
     }
 
 
-    @PostMapping("/newAddUser")
+    @PostMapping()
     public ResponseEntity<User> create(@Valid @RequestBody User user) {
         userService.save(user);
         return ResponseEntity.ok(user);
@@ -47,21 +47,5 @@ public class AdminRestController {
     public ResponseEntity<User> update(@RequestBody User user, @PathVariable("id") Long id) {
     userService.update(user, id);
     return ResponseEntity.ok(user);
-}
-
-    @ExceptionHandler
-    private ResponseEntity<UserErrorResponse> handleException(NoSuchElementException e){
-        UserErrorResponse response = new UserErrorResponse(
-                e.getMessage()
-        );
-        return ResponseEntity.ok(response);
-    }
-
-    @ExceptionHandler
-    private ResponseEntity<UserErrorResponse> handleException(UserNotCreateException e){
-        UserErrorResponse response = new UserErrorResponse(
-                e.getMessage()
-        );
-        return ResponseEntity.ok(response);
     }
 }
