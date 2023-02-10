@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("api/admin")
-public class RestApiController {
+@RequestMapping("api/admin/users")
+public class AdminRestController {
 
     private final UserService userService;
-    public RestApiController(UserService userService) {
+    public AdminRestController(UserService userService) {
         this.userService = userService;
     }
 
@@ -26,29 +26,26 @@ public class RestApiController {
         return ResponseEntity.ok(userService.findAll());
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUser (@PathVariable("id") long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
 
     @PostMapping("/newAddUser")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<User> create(@Valid @RequestBody User user) {
         userService.save(user);
         return ResponseEntity.ok(user);
     }
 
-    @DeleteMapping("/users/{id}")
-    public void pageDelete(@PathVariable("id") long id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") long id) {
         userService.deleteById(id);
     }
 
-    @PatchMapping("/users/{id}")
-    public ResponseEntity<User> userSaveEdit(@RequestBody User user, @PathVariable("id") Long id) {
-    user.setId(id);
-    String oldPassword = userService.findById(id).getPassword();
-    user.setPassword(oldPassword);
-    userService.save(user);
+    @PatchMapping("/{id}")
+    public ResponseEntity<User> update(@RequestBody User user, @PathVariable("id") Long id) {
+    userService.update(user, id);
     return ResponseEntity.ok(user);
 }
 

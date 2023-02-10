@@ -1,4 +1,4 @@
-const url = '/api/admin';
+const url = '/api/admin/users';
 let roleList = [
     {id: 1, role: "ROLE_USER"},
     {id: 2, role: "ROLE_ADMIN"}
