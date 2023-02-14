@@ -18,12 +18,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    final PasswordEncoder passwordEncoder;
 
 
     @Autowired
-    @Lazy
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository,  @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -35,6 +34,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User findById(Long id) {
+//        User user = new User();
+//        Optional<User> optional = userRepository.findById(id);
+//        if(optional.isPresent()) {
+//            user = optional.get();
+//        }
+//        return user;
         return userRepository.findById(id);
     }
 
@@ -53,24 +58,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void save(User user) {
-        getPasswordEncoder(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
+
     @Override
     public void update(User user, Long id) {
-        user.setId(id);
-        getPasswordEncoder(user);
-        userRepository.update(user);
+        if (user.getPassword().equals(findById(id).getPassword())) {
+            user.setPassword(findById(id).getPassword());
+            userRepository.save(user);
+        } else {
+            user.setId(id);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.update(user);
+        }
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.find(username);
-    }
-
-    public User getPasswordEncoder(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return user;
     }
 }
